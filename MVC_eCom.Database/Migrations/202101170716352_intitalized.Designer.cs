@@ -13,7 +13,7 @@ namespace MVC_eCom.Database.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202101170434193_intitalized"; }
+            get { return "202101170716352_intitalized"; }
         }
         
         string IMigrationMetadata.Source
