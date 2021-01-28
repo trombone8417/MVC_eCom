@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>新增產品</h2>
+<form id="createProduct">
+    <label>Name</label>
+    <input name="Name" />
+    <br />
+
+    <label>Description</label>
+    <input name="Description" />
+    <br />
+
+    <label>Price</label>
+    <input name="Price" />
+    <br />
+
+    <button id="saveBtn" type="button">Save</button>
+</form>
+<script>
+    $("#saveBtn").click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/Product/Create',
+            data: $("#createProduct").serialize()
+        }).done(function (response) {
+            //秀出結果
+            $("#tableContiner").html(response);
+            //清空新增資料
+            $("#actionContainer").html("");
+        }).fail(function (XMLHttpRequest, textStatus, errThrown) {
+            alert("fail");
+        });
+    });
+</script>
+

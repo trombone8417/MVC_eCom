@@ -1,0 +1,102 @@
+﻿@model List<Product>
+@{
+    ViewBag.Title = "ProductTable";
+}
+
+<div>
+    <div>
+        <form method="post">
+            <input id="searchTxt" name="Search" />
+            <button type="button" id="searchBtn">Search</button>
+        </form>
+        <button type="button" id="newBtn">New</button>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <td>Product Name</td>
+                <td>Category</td>
+                <td>Price</td>
+                <td>Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>-</td>
+                    <td>@product.Price</td>
+                    <td>
+                        <button class="editBtn" data-id="@product.ID">Edit</button>
+                        <button class="deleteBtn" data-id="@product.ID">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script>
+    //搜尋
+    $("#searchBtn").click(function () {
+        var searchValue = $("#searchTxt").val();
+        $.ajax({
+            //預設Get
+            url: '/Product/ProductTable',
+            data: {
+                search: searchValue
+            }
+        }).done(function (response) {
+            $("#tableContiner").html(response);
+        }).fail(function (XMLHttpRequest, textStatus, errThrown) {
+            alert("fail");
+        });
+    });
+    //新增(帶入Template)
+    $("#newBtn").click(function () {
+        
+        $.ajax({
+            //預設Get
+            url: '/Product/Create',
+        }).done(function (response) {
+            $("#actionContainer").html(response);
+        }).fail(function (XMLHttpRequest, textStatus, errThrown) {
+            alert("fail");
+        });
+    });
+    //編輯(帶入Template)
+    $(".editBtn").click(function () {
+
+        $.ajax({
+            //預設Get
+            url: '/Product/Edit',
+            data: {
+                ID: $(this).attr('data-id')
+            }
+        }).done(function (response) {
+            $("#actionContainer").html(response);
+        }).fail(function (XMLHttpRequest, textStatus, errThrown) {
+            alert("fail");
+        });
+    });
+    //編輯
+    $(".deleteBtn").click(function () {
+        var confirmDelete = confirm("確定要刪除嗎?");
+        if (confirmDelete) {
+            $.ajax({
+                type:'POST',
+                url: '/Product/Delete',
+                data: {
+                    ID: $(this).attr('data-id')
+                }
+            }).done(function (response) {
+                $("#tableContiner").html(response);
+            }).fail(function (XMLHttpRequest, textStatus, errThrown) {
+                alert("fail");
+            });
+        }
+        
+    });
+</script>
+
+
