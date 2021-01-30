@@ -8,6 +8,7 @@ namespace MVC_eCom.Entities
 {
     public class Category : BaseEntity
     {
+        public string ImageURL { get; set; }
         public List<Product> Products { get; set; }
     }
 }

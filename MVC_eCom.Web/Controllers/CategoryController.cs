@@ -10,7 +10,7 @@ namespace MVC_eCom.Web.Controllers
 {
     public class CategoryController : Controller
     {
-        CategoriesServices categoryService = new CategoriesServices();
+        CategoriesService categoryService = new CategoriesService();
 
         [HttpGet]
         public ActionResult Index()

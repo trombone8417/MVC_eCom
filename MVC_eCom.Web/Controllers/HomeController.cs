@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MVC_eCom.Services;
+using MVC_eCom.Web.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +10,12 @@ namespace MVC_eCom.Web.Controllers
 {
     public class HomeController : Controller
     {
+        CategoriesService categoryService = new CategoriesService();
         public ActionResult Index()
         {
-            return View();
+            HomeViewModel model = new HomeViewModel();
+            model.Categories = categoryService.GetCategories();
+            return View(model);
         }
 
         public ActionResult About()

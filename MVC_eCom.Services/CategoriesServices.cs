@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MVC_eCom.Services
 {
-    public class CategoriesServices
+    public class CategoriesService
     {
         public Category GetCategory(int ID)
         {
