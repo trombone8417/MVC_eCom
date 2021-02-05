@@ -9,6 +9,6 @@ namespace MVC_eCom.Entities
     public class Product : BaseEntity
     {
         public decimal Price { get; set; }
-        public Category Category { get; set; }
+        public virtual Category Category { get; set; }
     }
 }
