@@ -10,5 +10,6 @@ namespace MVC_eCom.Entities
     {
         public string ImageURL { get; set; }
         public List<Product> Products { get; set; }
+        public bool isFeatured { get; set; }
     }
 }
