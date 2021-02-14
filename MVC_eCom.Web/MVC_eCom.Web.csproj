@@ -183,6 +183,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\CategoryViewModels.cs" />
     <Compile Include="ViewModels\HomeViewModels.cs" />
+    <Compile Include="ViewModels\ProductViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -403,6 +404,7 @@
     <Content Include="Content\images\slider\slider-bg-5.jpg" />
     <Content Include="Content\images\slider\slider-bg-7.jpg" />
     <Content Include="Content\images\slider\slider-bg-8.jpg" />
+    <Content Include="Content\images\system\placeholder-image.png" />
     <Content Include="Content\images\wordpress-version.png" />
     <Content Include="Content\javascript\bootstrap.min.js" />
     <Content Include="Content\javascript\equalize.min.js" />
@@ -536,6 +538,7 @@
     <Content Include="Views\Product\ProductTable.cshtml" />
     <Content Include="Views\Product\Create.cshtml" />
     <Content Include="Views\Product\Edit.cshtml" />
+    <Content Include="Views\Category\CategoryTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

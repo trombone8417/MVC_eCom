@@ -40,8 +40,7 @@ namespace MVC_eCom.Web.Controllers
             var newProduct = new Product();
             newProduct.Name = model.Name;
             newProduct.Description = model.Description;
-            newProduct.Price = model.Price;
-            newProduct.Category = categoryService.GetCategory(model.CategoryID);
+            
             productsService.SaveProduct(newProduct);
             return RedirectToAction("ProductTable");
         }
