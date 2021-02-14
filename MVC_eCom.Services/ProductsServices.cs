@@ -15,7 +15,7 @@ namespace MVC_eCom.Services
         {
             using (var context = new CBContext())
             {
-                return context.Products.Where(x=>x.ID == ID).Include(x => x.Category).FirstOrDefault();
+                return context.Products.Where(x => x.ID == ID).Include(x => x.Category).FirstOrDefault();
             }
         }
         public List<Product> GetProducts()

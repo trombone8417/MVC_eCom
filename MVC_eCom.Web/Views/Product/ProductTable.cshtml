@@ -1,4 +1,4 @@
-﻿@model List<Product>
+﻿@model ProductSearchViewModel
 @{
     ViewBag.Title = "ProductTable";
 }
@@ -10,7 +10,7 @@
             <div class="col-md-8">
                 <div class="form-group">
                     <label>Search</label>
-                    <input class="form-control" id="searchTxt" name="Search" />
+                    <input class="form-control" id="searchTxt" name="Search" value="@Model.SearchTerm"  />
                 </div>
             </div>
             <div class="col-md-4">
@@ -36,31 +36,41 @@
                 <td>Product Name</td>
                 <td>Category</td>
                 <td>Price</td>
-                <td>Actions</td>
+                <td class="wrap-td">Actions</td>
             </tr>
         </thead>
         <tbody>
-            @foreach (var product in Model)
+            @if (Model.Products != null && Model.Products.Count > 0)
+            {
+
+                foreach (var product in Model.Products)
+                {
+                    <tr>
+                        <td>@product.Name</td>
+                        <td>
+                            @if (product.Category != null)
+                            {
+                                <text>@product.Category.Name</text>
+                            }
+                            else
+                            {
+                                <text>-</text>
+                            }
+
+                        </td>
+                        <td>@product.Price</td>
+                        <td class="wrap-td">
+                            <button class="editBtn" data-id="@product.ID">Edit</button>
+                            <button class="deleteBtn" data-id="@product.ID">Delete</button>
+                            <button class="addtoCart" data-id="@product.ID">Add To Cart</button>
+                        </td>
+                    </tr>
+                }
+            }
+            else
             {
                 <tr>
-                    <td>@product.Name</td>
-                    <td>
-                        @if (product.Category != null)
-                        {
-                            <text>@product.Category.Name</text>
-                        }
-                        else
-                        {
-                            <text>-</text>
-                        }
-
-                    </td>
-                    <td>@product.Price</td>
-                    <td>
-                        <button class="editBtn" data-id="@product.ID">Edit</button>
-                        <button class="deleteBtn" data-id="@product.ID">Delete</button>
-                        <button class="addtoCart" data-id="@product.ID">Add To Cart</button>
-                    </td>
+                    <td class="text-danger" colspan="4">No Products found.</td>
                 </tr>
             }
         </tbody>
@@ -90,6 +100,8 @@
             url: '/Product/Create',
         }).done(function (response) {
             $("#actionContainer").html(response);
+            focusAction();
+
         }).fail(function (XMLHttpRequest, textStatus, errThrown) {
             alert("fail");
         });
@@ -105,6 +117,7 @@
             }
         }).done(function (response) {
             $("#actionContainer").html(response);
+            focusAction();
         }).fail(function (XMLHttpRequest, textStatus, errThrown) {
             alert("fail");
         });
@@ -127,6 +140,12 @@
         }
 
     });
+
+    function focusAction() {
+        $('html, body').animate({
+            scrollTop: $("#actionContainer").offset().top - 100
+        }, 1000);
+    }
 </script>
 
 

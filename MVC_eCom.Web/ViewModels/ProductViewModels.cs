@@ -6,7 +6,7 @@ using System.Web;
 
 namespace MVC_eCom.Web.ViewModels
 {
-    public class ProductViewModels
+    public class ProductSearchViewModel
     {
         public List<Product> Products { get; set; }
         public string SearchTerm { get; set; }
