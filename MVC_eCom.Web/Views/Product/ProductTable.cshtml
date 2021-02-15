@@ -140,6 +140,14 @@
         }
 
     });
+    var products = [];
+    //加到購物車(帶入Template)
+    $(".addtoCart").click(function () {
+        var productID = $(this).attr('data-id');
+        products.push(productID);
+        $.cookie('CartProducts', products.join('-'), {path:'/'});
+        alert('加入購物車');
+    });
 
     function focusAction() {
         $('html, body').animate({
