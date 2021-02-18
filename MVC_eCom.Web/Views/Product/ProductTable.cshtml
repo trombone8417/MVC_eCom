@@ -124,21 +124,35 @@
     });
     //編輯
     $(".deleteBtn").click(function () {
-        var confirmDelete = confirm("確定要刪除嗎?");
-        if (confirmDelete) {
-            $.ajax({
-                type: 'POST',
-                url: '/Product/Delete',
-                data: {
-                    ID: $(this).attr('data-id')
-                }
-            }).done(function (response) {
-                $("#tableContiner").html(response);
-            }).fail(function (XMLHttpRequest, textStatus, errThrown) {
-                alert("fail");
-            });
-        }
 
+        swal({
+            title: "確定要刪除嗎?",
+            text: "您確定要刪除這個產品嗎?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                
+                if (willDelete) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Product/Delete',
+                        data: {
+                            ID: $(this).attr('data-id')
+                        }
+                    }).done(function (response) {
+                        
+                        $("#tableContiner").html(response);
+                        swal("刪除成功!", {
+                            icon: "success",
+                        });
+                    }).fail(function (XMLHttpRequest, textStatus, errThrown) {
+                        alert("fail");
+                    });
+                    
+                } 
+            });
     });
     var products = [];
     //加到購物車(帶入Template)

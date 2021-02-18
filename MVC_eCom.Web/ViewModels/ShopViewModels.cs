@@ -9,5 +9,6 @@ namespace MVC_eCom.Web.ViewModels
     public class CheckoutViewModel
     {
         public List<Product> CartProducts { get; set; }
+        public List<int> CartProductIDs { get; set; }
     }
 }

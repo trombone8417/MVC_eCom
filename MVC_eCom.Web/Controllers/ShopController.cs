@@ -22,8 +22,8 @@ namespace MVC_eCom.Web.Controllers
                 //var productIDs = CartProductsCookie.Value;
                 //var ids = productIDs.Split('-');
                 //List<int> pIDs = ids.Select(x => int.Parse(x)).ToList();
-                var ProductIDs = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
-                model.CartProducts = productsService.GetProducts(ProductIDs);
+                model.CartProductIDs = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
+                model.CartProducts = productsService.GetProducts(model.CartProductIDs);
             }
             return View(model);
         }
