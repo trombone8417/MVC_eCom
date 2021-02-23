@@ -44,6 +44,11 @@
                         <td>@category.Name</td>
 						<td>
 							@category.Products.Count
+                            <br />
+							@foreach (var product in category.Products)
+                            {
+								<span>@product.Name,</span>
+                            }
 						</td>
 						<td class="wrap-td">
 							<button class="editBtn" data-id="@category.ID">Edit</button>
@@ -65,11 +70,13 @@
 		var searchValue = $("#searchTxt").val();
 
 		$.ajax({
-			url: '/Category/CategoryTable',
-			data: {
-				search: searchValue
-			}
-		})
+			url: '@Url.Action("CategoryTable", "Category")',//'/Category/CategoryTable',
+
+            data: {
+                search: searchValue
+
+            }
+            })
 		.done(function (response) {
 			$("#tableContiner").html(response);
 		})
