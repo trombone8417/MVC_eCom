@@ -10,6 +10,21 @@ namespace MVC_eCom.Services
 {
     public class ConfigurationsService
     {
+        //public static ConfigurationsService ClassObject
+        //{
+        //    get
+        //    {
+        //        if (privateInMemoryObject == null) privateInMemoryObject = new ConfigurationsService();
+        //        return privateInMemoryObject;
+        //    }
+            
+        //}
+        //private static ConfigurationsService privateInMemoryObject { get; set; }
+        //private ConfigurationsService()
+        //{
+
+        //}
+
         public Config GetConfig(string Key)
         {
             using (var context = new CBContext())

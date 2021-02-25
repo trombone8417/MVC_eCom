@@ -9,8 +9,25 @@ using System.Data.Entity;
 
 namespace MVC_eCom.Services
 {
-    public class ProductsServices
+    public class ProductsService
     {
+        #region Singleton
+        
+        public static ProductsService Instance
+        {
+            get
+            {
+                if (instance == null) instance = new ProductsService();
+                return instance;
+            }
+
+        }
+        private static ProductsService instance { get; set; }
+        private ProductsService()
+        {
+
+        }
+        #endregion
         public Product GetProduct(int ID)
         {
             using (var context = new CBContext())
@@ -25,12 +42,12 @@ namespace MVC_eCom.Services
                 return context.Products.Where(product => IDs.Contains(product.ID)).ToList();
             }
         }
-        public List<Product> GetProducts()
+        public List<Product> GetProducts(int pageNo)
         {
-
+            int pageSize = 5;
             using (var context = new CBContext())
             {
-                return context.Products.Include(x=>x.Category).ToList();
+                return context.Products.OrderBy(x=>x.ID).Skip((pageNo-1)*pageSize).Take(pageSize).Include(x=>x.Category).ToList();
             }
         }
         public void SaveProduct(Product product)

@@ -10,7 +10,7 @@ namespace MVC_eCom.Web.Controllers
 {
     public class ShopController : Controller
     {
-        ProductsServices productsService = new ProductsServices();
+        //ProductsServices productsService = new ProductsServices();
         // GET: Shop
         public ActionResult Checkout()
         {
@@ -23,7 +23,7 @@ namespace MVC_eCom.Web.Controllers
                 //var ids = productIDs.Split('-');
                 //List<int> pIDs = ids.Select(x => int.Parse(x)).ToList();
                 model.CartProductIDs = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
-                model.CartProducts = productsService.GetProducts(model.CartProductIDs);
+                model.CartProducts = ProductsService.Instance.GetProducts(model.CartProductIDs);
             }
             return View(model);
         }

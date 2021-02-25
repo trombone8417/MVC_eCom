@@ -30,6 +30,8 @@ namespace MVC_eCom.Web.Controllers
             }
             return PartialView("CategoryTable",model);
         }
+        #region Creation
+
         [HttpGet]
         public ActionResult Create()
         {
@@ -47,6 +49,11 @@ namespace MVC_eCom.Web.Controllers
             categoryService.SaveCategory(newCategory);
             return RedirectToAction("CategoryTable");
         }
+
+        #endregion
+        #region Updation
+
+        
         [HttpGet]
         public ActionResult Edit(int ID)
         {
@@ -70,7 +77,7 @@ namespace MVC_eCom.Web.Controllers
             categoryService.UpdateCategory(existingCategory);
             return RedirectToAction("CategoryTable");
         }
-        
+        #endregion
         [HttpPost]
         public ActionResult Delete(int ID)
         {

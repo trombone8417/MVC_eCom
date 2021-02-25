@@ -11,17 +11,18 @@ namespace MVC_eCom.Web.Controllers
 {
     public class ProductController : Controller
     {
-        ProductsServices productsService = new ProductsServices();
+        //ProductsServices ProductsService.ClassObject = new ProductsServices();
         CategoriesService categoryService = new CategoriesService();
         // GET: Product
         public ActionResult Index()
         {
             return View();
         }
-        public ActionResult ProductTable(string search)
+        public ActionResult ProductTable(string search, int? pageNo)
         {
             ProductSearchViewModel model = new ProductSearchViewModel();
-            model.Products = productsService.GetProducts();
+            model.PageNo = pageNo.HasValue ?pageNo>0? pageNo.Value:1 : 1;
+            model.Products = ProductsService.Instance.GetProducts(model.PageNo);
             if (string.IsNullOrEmpty(search)== false)
             {
                 model.SearchTerm = search;
@@ -45,14 +46,14 @@ namespace MVC_eCom.Web.Controllers
             newProduct.Price = model.Price;
             newProduct.Category = categoryService.GetCategory(model.CategoryID);
             
-            productsService.SaveProduct(newProduct);
+            ProductsService.Instance.SaveProduct(newProduct);
             return RedirectToAction("ProductTable");
         }
         [HttpGet]
         public ActionResult Edit(int ID)
         {
             EditProductViewModel model = new EditProductViewModel();
-            var product = productsService.GetProduct(ID);
+            var product = ProductsService.Instance.GetProduct(ID);
             model.ID = product.ID;
             model.Name = product.Name;
             model.Description = product.Description;
@@ -64,20 +65,20 @@ namespace MVC_eCom.Web.Controllers
         [HttpPost]
         public ActionResult Edit(EditProductViewModel model)
         {
-            var existingProduct = productsService.GetProduct(model.ID);
+            var existingProduct = ProductsService.Instance.GetProduct(model.ID);
             existingProduct.Name = model.Name;
             existingProduct.Description = model.Description;
             existingProduct.Price = model.Price;
             existingProduct.Category = categoryService.GetCategory(model.CategoryID);
 
-            productsService.UpdateProduct(existingProduct);
+            ProductsService.Instance.UpdateProduct(existingProduct);
             return RedirectToAction("ProductTable");
         }
 
         [HttpPost]
         public ActionResult Delete(int ID)
         {
-            productsService.DeleteProduct(ID);
+            ProductsService.Instance.DeleteProduct(ID);
             return RedirectToAction("ProductTable");
         }
 

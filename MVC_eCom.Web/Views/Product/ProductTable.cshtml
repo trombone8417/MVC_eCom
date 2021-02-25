@@ -10,7 +10,7 @@
             <div class="col-md-8">
                 <div class="form-group">
                     <label>Search</label>
-                    <input class="form-control" id="searchTxt" name="Search" value="@Model.SearchTerm"  />
+                    <input class="form-control" id="searchTxt" name="Search" value="@Model.SearchTerm" />
                 </div>
             </div>
             <div class="col-md-4">
@@ -66,6 +66,7 @@
                         </td>
                     </tr>
                 }
+
             }
             else
             {
@@ -75,8 +76,33 @@
             }
         </tbody>
     </table>
+    <div>
+        @if (Model.PageNo!=1)
+        {
+
+        <button class="pageButtons" id="PreviousRecords" data-pageNo="@(Model.PageNo - 1)">Previous</button>
+        }
+        <button class="pageButtons" id="NextRecords" data-pageNo="@(Model.PageNo + 1)">Next</button>
+    </div>
 </div>
 <script>
+    //上一頁
+    $(".pageButtons").click(function () {
+
+        $.ajax({
+            //預設Get
+            url: '/Product/ProductTable',
+            data: {
+                pageNo : $(this).attr("data-pageNo")
+            }
+        }).done(function (response) {
+            $("#tableContiner").html(response);
+
+        }).fail(function (XMLHttpRequest, textStatus, errThrown) {
+            alert("fail");
+        });
+    });
+    
     //搜尋
     $("#searchBtn").click(function () {
         var searchValue = $("#searchTxt").val();
@@ -133,7 +159,7 @@
             dangerMode: true,
         })
             .then((willDelete) => {
-                
+
                 if (willDelete) {
                     $.ajax({
                         type: 'POST',
@@ -142,7 +168,7 @@
                             ID: $(this).attr('data-id')
                         }
                     }).done(function (response) {
-                        
+
                         $("#tableContiner").html(response);
                         swal("刪除成功!", {
                             icon: "success",
@@ -150,8 +176,8 @@
                     }).fail(function (XMLHttpRequest, textStatus, errThrown) {
                         alert("fail");
                     });
-                    
-                } 
+
+                }
             });
     });
     var products = [];
@@ -159,7 +185,7 @@
     $(".addtoCart").click(function () {
         var productID = $(this).attr('data-id');
         products.push(productID);
-        $.cookie('CartProducts', products.join('-'), {path:'/'});
+        $.cookie('CartProducts', products.join('-'), { path: '/' });
         alert('加入購物車');
     });
 
