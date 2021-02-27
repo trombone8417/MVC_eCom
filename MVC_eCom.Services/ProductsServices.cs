@@ -47,7 +47,8 @@ namespace MVC_eCom.Services
             int pageSize = 5;
             using (var context = new CBContext())
             {
-                return context.Products.OrderBy(x=>x.ID).Skip((pageNo-1)*pageSize).Take(pageSize).Include(x=>x.Category).ToList();
+                return context.Products.Include(x=>x.Category).ToList();
+                //return context.Products.OrderBy(x=>x.ID).Skip((pageNo-1)*pageSize).Take(pageSize).Include(x=>x.Category).ToList();
             }
         }
         public void SaveProduct(Product product)
