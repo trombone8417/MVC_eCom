@@ -18,10 +18,13 @@
                 <div class="form-group">
                     <label>Action</label>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4 pr-0">
                             <button class="btn btn-primary form-control" type="button" id="searchBtn">Search</button>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4 pr-0">
+                            <button class="btn btn-primary form-control" type="button" id="resetBtn">Reset</button>
+                        </div>
+                        <div class="col-md-4 pr-0">
                             <button class="btn btn-primary form-control" type="button" id="newBtn">New</button>
                         </div>
                     </div>
@@ -120,6 +123,23 @@
             alert("fail");
         });
     });
+
+    //搜尋(重置)
+    $("#resetBtn").click(function () {
+        var searchValue = '';
+        $.ajax({
+            //預設Get
+            url: '/Product/ProductTable',
+            data: {
+                search: searchValue
+            }
+        }).done(function (response) {
+            $("#tableContiner").html(response);
+        }).fail(function (XMLHttpRequest, textStatus, errThrown) {
+            alert("fail");
+        });
+    });
+
     //新增(帶入Template)
     $("#newBtn").click(function () {
 

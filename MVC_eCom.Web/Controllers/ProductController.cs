@@ -11,8 +11,7 @@ namespace MVC_eCom.Web.Controllers
 {
     public class ProductController : Controller
     {
-        //ProductsServices ProductsService.ClassObject = new ProductsServices();
-        CategoriesService categoryService = new CategoriesService();
+        
         // GET: Product
         public ActionResult Index()
         {
@@ -34,7 +33,7 @@ namespace MVC_eCom.Web.Controllers
         public ActionResult Create()
         {
             NewProductViewModel model = new NewProductViewModel();
-            model.AvailableCategories = categoryService.GetCategories();
+            model.AvailableCategories = CategoriesService.Instance.GetCategories();
             return PartialView(model);
         }
         [HttpPost]
@@ -44,7 +43,7 @@ namespace MVC_eCom.Web.Controllers
             newProduct.Name = model.Name;
             newProduct.Description = model.Description;
             newProduct.Price = model.Price;
-            newProduct.Category = categoryService.GetCategory(model.CategoryID);
+            newProduct.Category = CategoriesService.Instance.GetCategory(model.CategoryID);
             
             ProductsService.Instance.SaveProduct(newProduct);
             return RedirectToAction("ProductTable");
@@ -59,7 +58,7 @@ namespace MVC_eCom.Web.Controllers
             model.Description = product.Description;
             model.Price = product.Price;
             model.CategoryID = product.Category != null ? product.Category.ID : 0;
-            model.AvailableCategories = categoryService.GetCategories();
+            model.AvailableCategories = CategoriesService.Instance.GetCategories();
             return PartialView(model);
         }
         [HttpPost]
@@ -69,7 +68,7 @@ namespace MVC_eCom.Web.Controllers
             existingProduct.Name = model.Name;
             existingProduct.Description = model.Description;
             existingProduct.Price = model.Price;
-            existingProduct.Category = categoryService.GetCategory(model.CategoryID);
+            existingProduct.Category = CategoriesService.Instance.GetCategory(model.CategoryID);
 
             ProductsService.Instance.UpdateProduct(existingProduct);
             return RedirectToAction("ProductTable");

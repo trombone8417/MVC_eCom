@@ -1,6 +1,4 @@
-﻿@{
-    ConfigurationsService configurationsService = new ConfigurationsService();
-}
+﻿
 <!DOCTYPE html>
 <html>
 <head>
@@ -178,7 +176,7 @@
                             </form>
                             <ul class="flat-social">
 
-                                <li><a href="@configurationsService.GetConfig("GithubURL").Value"><i class="fa fa-github"></i></a></li>
+                                <li><a href="@ConfigurationsService.Instance.GetConfig("GithubURL").Value"><i class="fa fa-github"></i></a></li>
                                 <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                                 <li><a href="#"><i class="fa fa-google"></i></a></li>
                                 <li><a href="#"><i class="fa fa-behance"></i></a></li>
@@ -231,7 +229,7 @@
                             <ul class="flat-contact">
                                 <li class="address">112 Kingdom, NA 12, New York</li>
                                 <li class="phone">+12 345 678 910</li>
-                                <li class="email">@configurationsService.GetConfig("GithubURL").Value</li>
+                                <li class="email">@ConfigurationsService.Instance.GetConfig("GithubURL").Value</li>
                             </ul><!-- /.flat-contact -->
                         </div><!-- /.widget -->
                     </div><!-- /.col-md-3 -->
