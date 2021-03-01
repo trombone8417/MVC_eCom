@@ -27,22 +27,29 @@
         <input class="form-control"  name="Price" />
     </div>
     <button id="saveBtn" type="button" class="btn btn-primary">Save</button>
+    <button id="cancelBtn" type="button" class="btn btn-primary">Cancel</button>
 </form>
 
 <script>
     $("#saveBtn").click(function () {
         $.ajax({
             type: 'POST',
-            url: '/Product/Create',
+            url: '@Url.Action("Create", "Product")',
             data: $("#createProduct").serialize()
         }).done(function (response) {
             //秀出結果
             $("#tableContiner").html(response);
             //清空新增資料
             $("#actionContainer").html("");
+            focusAction("tableContiner");
         }).fail(function (XMLHttpRequest, textStatus, errThrown) {
             alert("fail");
         });
+    });
+
+    $("#cancelBtn").click(function () {
+        $("#actionContainer").html("");
+        focusAction("tableContiner");
     });
 </script>
 

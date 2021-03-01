@@ -37,10 +37,10 @@
     <table id="ProductsTable" class="table table-striped">
         <thead>
             <tr>
-                <td>Product Name</td>
-                <td>Category</td>
-                <td>Price</td>
-                <td class="wrap-td">Actions</td>
+                <th class="font-weight-bold">Product Name</th>
+                <th class="font-weight-bold">Category</th>
+                <th class="font-weight-bold">Price</th>
+                <th class="font-weight-bold wrap-td">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -96,24 +96,23 @@
 
         $.ajax({
             //預設Get
-            url: '/Product/ProductTable',
+            url: '@Url.Action("ProductTable", "Product")',
             data: {
                 pageNo : $(this).attr("data-pageNo")
             }
         }).done(function (response) {
             $("#tableContiner").html(response);
-
         }).fail(function (XMLHttpRequest, textStatus, errThrown) {
             alert("fail");
         });
     });
-    
+
     //搜尋
     $("#searchBtn").click(function () {
         var searchValue = $("#searchTxt").val();
         $.ajax({
             //預設Get
-            url: '/Product/ProductTable',
+            url: '@Url.Action("ProductTable", "Product")',
             data: {
                 search: searchValue
             }
@@ -129,7 +128,7 @@
         var searchValue = '';
         $.ajax({
             //預設Get
-            url: '/Product/ProductTable',
+            url: '@Url.Action("ProductTable", "Product")',
             data: {
                 search: searchValue
             }
@@ -145,11 +144,10 @@
 
         $.ajax({
             //預設Get
-            url: '/Product/Create',
+            url: '@Url.Action("Create", "Product")',
         }).done(function (response) {
             $("#actionContainer").html(response);
-            focusAction();
-
+            focusAction("actionContainer");
         }).fail(function (XMLHttpRequest, textStatus, errThrown) {
             alert("fail");
         });
@@ -159,13 +157,14 @@
 
         $.ajax({
             //預設Get
-            url: '/Product/Edit',
+            url: '@Url.Action("Edit", "Product")',
             data: {
                 ID: $(this).attr('data-id')
             }
         }).done(function (response) {
             $("#actionContainer").html(response);
-            focusAction();
+            focusAction("actionContainer");
+
         }).fail(function (XMLHttpRequest, textStatus, errThrown) {
             alert("fail");
         });
@@ -185,7 +184,7 @@
                 if (willDelete) {
                     $.ajax({
                         type: 'POST',
-                        url: '/Product/Delete',
+                        url:  '@Url.Action("Delete", "Product")',
                         data: {
                             ID: $(this).attr('data-id')
                         }
@@ -211,11 +210,6 @@
         alert('加入購物車');
     });
 
-    function focusAction() {
-        $('html, body').animate({
-            scrollTop: $("#actionContainer").offset().top - 100
-        }, 1000);
-    }
 </script>
 
 

@@ -12,14 +12,17 @@
 			<div class="col-md-4">
 				<div class="form-group">
 					<label>Action</label>
-					<div class="row">
-						<div class="col-md-6">
-							<button class="btn btn-primary form-control" type="button" id="searchBtn">Search</button>
-						</div>
-						<div class="col-md-6">
-							<button class="btn btn-primary form-control" type="button" id="newBtn">New</button>
-						</div>
-					</div>
+                    <div class="row">
+                        <div class="col-md-4 pr-0">
+                            <button class="btn btn-primary form-control" type="button" id="searchBtn">Search</button>
+                        </div>
+                        <div class="col-md-4 pr-0">
+                            <button class="btn btn-primary form-control" type="button" id="resetBtn">Reset</button>
+                        </div>
+                        <div class="col-md-4 pr-0">
+                            <button class="btn btn-primary form-control" type="button" id="newBtn">New</button>
+                        </div>
+                    </div>
 				</div>
 			</div>
 		</div>
@@ -30,9 +33,9 @@
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<td>Category Name</td>
-				<td>Products</td>
-				<td class="wrap-td">Actions</td>
+				<th class="font-weight-bold">Category Name</th>
+				<th class="font-weight-bold">Products</th>
+				<th class="font-weight-bold wrap-td">Actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -85,14 +88,33 @@
 		});
 	});
 
+	$("#resetBtn").click(function () {
+		var searchValue = '';
+
+		$.ajax({
+			url: '@Url.Action("CategoryTable", "Category")',//'/Category/CategoryTable',
+
+            data: {
+                search: searchValue
+
+            }
+            })
+		.done(function (response) {
+			$("#tableContiner").html(response);
+		})
+		.fail(function (XMLHttpRequest, textStatus, errorThrown) {
+			alert("FAIL");
+		});
+	});
+
 	$("#newBtn").click(function () {
 		$.ajax({
-			url: '/Category/Create',
+			url: '@Url.Action("Create","Category")',//'/Category/Create',
 		})
 		.done(function (response) {
 			$("#actionContainer").html(response);
 
-			focusAction();
+			focusAction("actionContainer");
 		})
 		.fail(function (XMLHttpRequest, textStatus, errorThrown) {
 			alert("FAIL");
@@ -101,7 +123,7 @@
 
 	$(".editBtn").click(function () {
 		$.ajax({
-			url: '/Category/Edit',
+			url: '@Url.Action("Edit","Category")',
 			data: {
 				ID: $(this).attr('data-id')
 			}
@@ -109,7 +131,7 @@
 		.done(function (response) {
 			$("#actionContainer").html(response);
 
-			focusAction();
+			focusAction("actionContainer");
 		})
 		.fail(function (XMLHttpRequest, textStatus, errorThrown) {
 			alert("FAIL");
@@ -124,7 +146,7 @@
 		{
 			$.ajax({
 				type: 'POST',
-				url: '/Category/Delete',
+				url: '@Url.Action("Delete","Category")',
 				data: {
 					ID: $(this).attr('data-id')
 				}
@@ -138,9 +160,5 @@
 		}
 	});
 
-	function focusAction() {
-		$('html, body').animate({
-			scrollTop: $("#actionContainer").offset().top - 100
-		}, 1000);
-	}
+	
 </script>

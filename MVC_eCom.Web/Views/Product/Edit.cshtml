@@ -31,12 +31,14 @@
         <input class="form-control" name="Price" value="@Model.Price" />
     </div>
     <button id="updateBtn" type="button" class="btn btn-primary">Update</button>
+    <button id="cancelBtn" type="button" class="btn btn-primary">Cancel</button>
+
 </form>
 <script>
     $("#updateBtn").click(function () {
         $.ajax({
             type: 'POST',
-            url: '/Product/Edit',
+            url: '@Url.Action("Edit", "Product")',
             data: $("#editProduct").serialize()
         }).done(function (response) {
             //秀出結果
@@ -46,6 +48,11 @@
         }).fail(function (XMLHttpRequest, textStatus, errThrown) {
             alert("fail");
         });
+    });
+
+    $("#cancelBtn").click(function () {
+        $("#actionContainer").html("");
+        focusAction("tableContiner");
     });
 </script>
 
