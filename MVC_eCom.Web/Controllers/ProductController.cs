@@ -44,7 +44,8 @@ namespace MVC_eCom.Web.Controllers
             newProduct.Description = model.Description;
             newProduct.Price = model.Price;
             newProduct.Category = CategoriesService.Instance.GetCategory(model.CategoryID);
-            
+            newProduct.ImageURL = model.ImageURL;
+
             ProductsService.Instance.SaveProduct(newProduct);
             return RedirectToAction("ProductTable");
         }
@@ -59,6 +60,8 @@ namespace MVC_eCom.Web.Controllers
             model.Price = product.Price;
             model.CategoryID = product.Category != null ? product.Category.ID : 0;
             model.AvailableCategories = CategoriesService.Instance.GetCategories();
+            model.ImageURL = product.ImageURL;
+
             return PartialView(model);
         }
         [HttpPost]
@@ -69,6 +72,7 @@ namespace MVC_eCom.Web.Controllers
             existingProduct.Description = model.Description;
             existingProduct.Price = model.Price;
             existingProduct.Category = CategoriesService.Instance.GetCategory(model.CategoryID);
+            existingProduct.ImageURL = model.ImageURL;
 
             ProductsService.Instance.UpdateProduct(existingProduct);
             return RedirectToAction("ProductTable");
