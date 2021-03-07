@@ -13,7 +13,7 @@ namespace MVC_eCom.Web.Controllers
         public ActionResult Index()
         {
             HomeViewModel model = new HomeViewModel();
-            model.FeaturedCategories = CategoriesService.Instance.GetCategories();
+            model.FeaturedCategories = CategoriesService.Instance.GetAllCategories();
             return View(model);
         }
 

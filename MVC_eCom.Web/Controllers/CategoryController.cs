@@ -15,19 +15,28 @@ namespace MVC_eCom.Web.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            
+
             return View();
         }
-        public ActionResult CategoryTable(string search)
+        public ActionResult CategoryTable(string search, int? pageNo)
         {
             CategorySearchViewModel model = new CategorySearchViewModel();
-            model.Categories = CategoriesService.Instance.GetCategories();
-            if (!string.IsNullOrEmpty(search))
+            model.SearchTerm = search;
+            pageNo = pageNo.HasValue ? pageNo > 0 ? pageNo.Value : 1 : 1;
+
+            var totalRecords = CategoriesService.Instance.GetCategoriesCount(model.SearchTerm);
+            model.Categories = CategoriesService.Instance.GetCategories(search,pageNo.Value);
+
+            if (model.Categories != null)
             {
-                model.SearchTerm = search;
-                model.Categories = model.Categories.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
+                model.Pager = new Pager(totalRecords, pageNo,3);
+                return PartialView("CategoryTable", model);
             }
-            return PartialView("CategoryTable",model);
+            else
+            {
+                return HttpNotFound();
+            }
+
         }
         #region Creation
 
@@ -52,7 +61,7 @@ namespace MVC_eCom.Web.Controllers
         #endregion
         #region Updation
 
-        
+
         [HttpGet]
         public ActionResult Edit(int ID)
         {

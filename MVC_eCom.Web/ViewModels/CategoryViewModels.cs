@@ -10,6 +10,8 @@ namespace MVC_eCom.Web.ViewModels
     {
         public List<Category> Categories { get; set; }
         public string SearchTerm { get; set; }
+        public Pager Pager { get; set; }
+
     }
     public class NewCategoryViewModel
     {

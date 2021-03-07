@@ -3,8 +3,7 @@
     ViewBag.Title = "ProductTable";
 }
 
-<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
-<script src="//cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+
 <div>
     <form method="post">
         <div class="row">
@@ -81,16 +80,16 @@
         </tbody>
     </table>
     <div>
-        @*@if (Model.PageNo!=1)
+        @if (Model.PageNo!=1)
         {
 
         <button class="pageButtons" id="PreviousRecords" data-pageNo="@(Model.PageNo - 1)">Previous</button>
         }
-        <button class="pageButtons" id="NextRecords" data-pageNo="@(Model.PageNo + 1)">Next</button>*@
+        <button class="pageButtons" id="NextRecords" data-pageNo="@(Model.PageNo + 1)">Next</button>
     </div>
 </div>
 <script>
-    $('#ProductsTable').DataTable();
+    
     //上一頁
     $(".pageButtons").click(function () {
 
