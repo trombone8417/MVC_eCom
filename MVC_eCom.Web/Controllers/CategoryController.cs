@@ -92,5 +92,10 @@ namespace MVC_eCom.Web.Controllers
             CategoriesService.Instance.DeleteCategory(ID);
             return RedirectToAction("CategoryTable");
         }
+        public ActionResult GetMainCategories()
+        {
+            var categories = CategoriesService.Instance.GetAllCategories();
+            return PartialView(categories);
+        }
     }
 }
