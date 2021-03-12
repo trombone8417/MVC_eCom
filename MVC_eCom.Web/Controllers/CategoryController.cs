@@ -25,11 +25,11 @@ namespace MVC_eCom.Web.Controllers
             pageNo = pageNo.HasValue ? pageNo > 0 ? pageNo.Value : 1 : 1;
 
             var totalRecords = CategoriesService.Instance.GetCategoriesCount(model.SearchTerm);
-            model.Categories = CategoriesService.Instance.GetCategories(search,pageNo.Value);
+            model.Categories = CategoriesService.Instance.GetCategories(search, pageNo.Value);
 
             if (model.Categories != null)
             {
-                model.Pager = new Pager(totalRecords, pageNo,3);
+                model.Pager = new Pager(totalRecords, pageNo, 3);
                 return PartialView("CategoryTable", model);
             }
             else
@@ -49,13 +49,21 @@ namespace MVC_eCom.Web.Controllers
         [HttpPost]
         public ActionResult Create(NewCategoryViewModel model)
         {
-            var newCategory = new Category();
-            newCategory.Name = model.Name;
-            newCategory.Description = model.Description;
-            newCategory.ImageURL = model.ImageURL;
-            newCategory.isFeatured = model.isFeatured;
-            CategoriesService.Instance.SaveCategory(newCategory);
-            return RedirectToAction("CategoryTable");
+            if (ModelState.IsValid)
+            {
+                var newCategory = new Category();
+                newCategory.Name = model.Name;
+                newCategory.Description = model.Description;
+                newCategory.ImageURL = model.ImageURL;
+                newCategory.isFeatured = model.isFeatured;
+                CategoriesService.Instance.SaveCategory(newCategory);
+                return RedirectToAction("CategoryTable");
+            }
+            else
+            {
+                return new HttpStatusCodeResult(500);
+            }
+
         }
 
         #endregion

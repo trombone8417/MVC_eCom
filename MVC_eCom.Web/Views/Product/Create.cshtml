@@ -86,7 +86,13 @@
             $("#actionContainer").html("");
             focusAction("tableContiner");
         }).fail(function (XMLHttpRequest, textStatus, errThrown) {
-            alert("fail");
+            swal({
+                title: "警告?",
+                text: "請完成所有必填欄位!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
         });
     });
 

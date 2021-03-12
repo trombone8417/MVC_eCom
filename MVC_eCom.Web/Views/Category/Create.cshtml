@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-md-8">
             <div class="form-group">
-                <label>Name</label>
+                <label>Name <span class="text-danger">*</span></label>
                 <input class="form-control" name="Name" />
             </div>
             <div class="form-group">
@@ -85,7 +85,13 @@
                 focusAction("tableContiner");
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("FAIL");
+                swal({
+                    title: "警告?",
+                    text: "請完成所有必填欄位!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
             });
     });
 

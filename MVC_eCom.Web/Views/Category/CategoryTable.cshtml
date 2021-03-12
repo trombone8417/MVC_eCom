@@ -98,8 +98,8 @@
 			url: '@Url.Action("CategoryTable", "Category")',
 
             data: {
-                pageNo: $(this).attr("data-pageNo")
-
+                pageNo: $(this).attr("data-pageNo"),
+				search:'@Model.SearchTerm'
             }
             })
 		.done(function (response) {
