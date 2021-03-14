@@ -73,7 +73,31 @@
                 alert("FAIL");
             });
     });
+
+    $('#createCategory').validate({ // initialize the plugin
+        rules: {
+            Name: {
+                required: true,
+                minlength: 5,
+                maxlength:50
+            },
+            Description: {
+                maxlength: 500
+            }
+        },
+        messages: {
+            Name: {
+                required: 'Name為必須',
+                minlength: '長度最少5字元',
+                maxlength: '長度不得超過50字元'
+            },
+            Description: {
+                maxlength: '長度不得超過500字元'
+            }
+        }
+    });
     $("#saveBtn").click(function () {
+        if ($("#createCategory").valid()) {
         $.ajax({
             type: 'POST',
             url: '@Url.Action("Create", "Category")',
@@ -93,6 +117,17 @@
                     dangerMode: true,
                 })
             });
+        } else {
+
+            swal({
+                title: "警告?",
+                text: "請完成所有必填欄位!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+        }
+
     });
 
     $("#cancelBtn").click(function () {
