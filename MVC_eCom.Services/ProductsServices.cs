@@ -61,7 +61,15 @@ namespace MVC_eCom.Services
                 return context.Products.OrderByDescending(x => x.ID).Skip((pageNo - 1) * pageSize).Take(pageSize).Include(x => x.Category).ToList();
             }
         }
+        public List<Product> GetProductsByCategory(int categoryID, int pageSize)
+        {
 
+            using (var context = new CBContext())
+            {
+                //Sreturn context.Products.Include(x=>x.Category).ToList();
+                return context.Products.Where(x=>x.Category.ID==categoryID).OrderByDescending(x => x.ID).Take(pageSize).Include(x => x.Category).ToList();
+            }
+        }
         public List<Product> GetLatestProducts(int numberOfProducts)
         {
             using (var context = new CBContext())

@@ -25,7 +25,7 @@
                 var imageURL = string.IsNullOrEmpty(product.ImageURL) ? defaultImageURL : product.ImageURL;
                 <li class="product-item @product.Category.Name.ToLower()">
                     <div class="product-thumb clearfix">
-                        <a href="#" class="product-thumb">
+                        <a href="@Url.Action("Detail","Product",new { ID = product.ID })" class="product-thumb">
                             <img src="@imageURL" alt="image" style="height:250px">
                         </a>
                         @if (Model.IsLatestProducts)

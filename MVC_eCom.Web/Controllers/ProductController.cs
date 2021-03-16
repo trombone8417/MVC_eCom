@@ -85,5 +85,13 @@ namespace MVC_eCom.Web.Controllers
             return RedirectToAction("ProductTable");
         }
 
+        [HttpGet]
+        public ActionResult Detail(int ID)
+        {
+            ProductViewModel model = new ProductViewModel();
+            model.Product = ProductsService.Instance.GetProduct(ID);
+            return View(model);
+        }
+
     }
 }
