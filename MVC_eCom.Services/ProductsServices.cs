@@ -23,11 +23,52 @@ namespace MVC_eCom.Services
 
         }
         private static ProductsService instance { get; set; }
+
+        
+
         private ProductsService()
         {
 
         }
+
+        
         #endregion
+        public List<Product> SearchProducts(string searchTerm, int? minimumPrice, int? maximumPrice, int? categoryID)
+        {
+            using (var context = new CBContext())
+            {
+                var products = context.Products.ToList();
+                if (categoryID.HasValue)
+                {
+                    products = products.Where(x => x.Category.ID == categoryID.Value).ToList();
+                }
+
+                if (!string.IsNullOrEmpty(searchTerm))
+                {
+                    products = products.Where(x => x.Name.ToLower().Contains(searchTerm.ToLower())).ToList();
+                }
+
+                if (minimumPrice.HasValue)
+                {
+                    products = products.Where(x => x.Price >= minimumPrice.Value).ToList();
+                }
+
+                if (maximumPrice.HasValue)
+                {
+                    products = products.Where(x => x.Price <= maximumPrice.Value).ToList();
+                }
+
+                return products;
+
+            }
+        }
+        public int GetMaximumPrice()
+        {
+            using (var context = new CBContext())
+            {
+                return int.Parse(context.Products.Max(x=>x.Price).ToString());
+            }
+        }
         public Product GetProduct(int ID)
         {
             using (var context = new CBContext())
