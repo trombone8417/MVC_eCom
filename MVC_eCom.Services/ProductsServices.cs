@@ -66,7 +66,7 @@ namespace MVC_eCom.Services
         {
             using (var context = new CBContext())
             {
-                return int.Parse(context.Products.Max(x=>x.Price).ToString());
+                return (int)(context.Products.Max(x=>x.Price));
             }
         }
         public Product GetProduct(int ID)
