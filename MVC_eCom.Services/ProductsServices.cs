@@ -33,7 +33,7 @@ namespace MVC_eCom.Services
 
         
         #endregion
-        public List<Product> SearchProducts(string searchTerm, int? minimumPrice, int? maximumPrice, int? categoryID)
+        public List<Product> SearchProducts(string searchTerm, int? minimumPrice, int? maximumPrice, int? categoryID, int? sortBy)
         {
             using (var context = new CBContext())
             {
@@ -56,6 +56,23 @@ namespace MVC_eCom.Services
                 if (maximumPrice.HasValue)
                 {
                     products = products.Where(x => x.Price <= maximumPrice.Value).ToList();
+                }
+
+                if (sortBy.HasValue)
+                {
+                    switch (sortBy.Value)
+                    {
+                        case 2:
+                            products = products.OrderByDescending(x => x.ID).ToList();
+                            break;
+                        case 3:
+                            products = products.OrderBy(x => x.Price).ToList();
+                            break;
+
+                        default:
+                            products = products.OrderByDescending(x => x.Price).ToList();
+                            break;
+                    }
                 }
 
                 return products;

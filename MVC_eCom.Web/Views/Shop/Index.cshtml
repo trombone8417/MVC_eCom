@@ -1,4 +1,5 @@
-﻿@model ShopViewModel
+﻿@using MVC_eCom.Web.Code
+@model ShopViewModel
 @{
     ViewBag.Title = "Index";
     var defaultImageURL = "/Content/images/system/placeholder-image.png";
@@ -37,10 +38,10 @@
                             Sort By
                         </h5>
                         <ul>
-                            <li><a href="#" class="active">Default - Newest</a></li>
-                            <li><a href="#">Popularity</a></li>
-                            <li><a href="#">Price: low to high</a></li>
-                            <li><a href="#">Price: high to low</a></li>
+                            <li><a href="@Url.Action("Index","Shop",new { sortBy=(int)SortByEnums.Default})" class="@(Model.SortBy.HasValue?Model.SortBy.Value==(int)SortByEnums.Default?"active":string.Empty:string.Empty)">Default - Newest</a></li>
+                            <li><a href="@Url.Action("Index","Shop",new { sortBy=(int)SortByEnums.Popularity})" class="@(Model.SortBy.HasValue?Model.SortBy.Value==(int)SortByEnums.Popularity?"active":string.Empty:string.Empty)">Popularity</a></li>
+                            <li><a href="@Url.Action("Index","Shop",new { sortBy=(int)SortByEnums.PriceLowToHigh})" class="@(Model.SortBy.HasValue?Model.SortBy.Value==(int)SortByEnums.PriceLowToHigh?"active":string.Empty:string.Empty)">Price: low to high</a></li>
+                            <li><a href="@Url.Action("Index","Shop",new { sortBy=(int)SortByEnums.PriceHighToLow})" class="@(Model.SortBy.HasValue?Model.SortBy.Value==(int)SortByEnums.PriceHighToLow?"active":string.Empty:string.Empty)">Price: high to low</a></li>
                         </ul>
                     </div><!-- /.widget-sort-by -->
                     <div class="widget widget-price">

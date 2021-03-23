@@ -16,5 +16,6 @@ namespace MVC_eCom.Web.ViewModels
         public int MaximumPrice { get; set; }
         public List<Category> FeaturedCategories { get; set; }
         public List<Product> Products { get; set; }
+        public int? SortBy { get; set; }
     }
 }
