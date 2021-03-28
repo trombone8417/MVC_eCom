@@ -25,5 +25,7 @@ namespace MVC_eCom.Web.ViewModels
     {
         public List<Product> Products { get; set; }
         public Pager Pager { get; set; }
+        public int? SortBy { get; set; }
+        public int? CategoryID { get; set; }
     }
 }

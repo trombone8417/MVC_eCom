@@ -53,6 +53,34 @@
 
 </form>
 <script>
+    $('#editProduct').validate({ // initialize the plugin
+        rules: {
+            Name: {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+            },
+            Description: {
+                maxlength: 500
+            },
+            Price: {
+                range: [1, 100000]
+            }
+        },
+        messages: {
+            Name: {
+                required: 'Name為必須',
+                minlength: '長度最少5字元',
+                maxlength: '長度不得超過50字元'
+            },
+            Description: {
+                maxlength: '長度不得超過500字元'
+            },
+            Price: {
+                range: '價格介於1~100000'
+            }
+        }
+    });
     $("#imageUpload").change(function () {
         var element = this;
         var formData = new FormData();
@@ -81,6 +109,7 @@
             });
     });
     $("#updateBtn").click(function () {
+        if ($("#editProduct").valid()) {
         $.ajax({
             type: 'POST',
             url: '@Url.Action("Edit", "Product")',
@@ -91,8 +120,25 @@
             //清空新增資料
             $("#actionContainer").html("");
         }).fail(function (XMLHttpRequest, textStatus, errThrown) {
-            alert("fail");
+            swal({
+                title: "錯誤",
+                text: "更新失敗!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
         });
+        } else {
+
+            swal({
+                title: "警告?",
+                text: "請完成所有必填欄位!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+        }
+
     });
 
     $("#cancelBtn").click(function () {

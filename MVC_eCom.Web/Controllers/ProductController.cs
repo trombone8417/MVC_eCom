@@ -72,10 +72,7 @@ namespace MVC_eCom.Web.Controllers
             existingProduct.Description = model.Description;
             existingProduct.Price = model.Price;
             existingProduct.Category = CategoriesService.Instance.GetCategory(model.CategoryID);
-            if (!string.IsNullOrEmpty(model.ImageURL))
-            {
-                existingProduct.ImageURL = model.ImageURL;
-            }
+            
             existingProduct.ImageURL = model.ImageURL;
 
             ProductsService.Instance.UpdateProduct(existingProduct);

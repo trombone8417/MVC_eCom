@@ -3,7 +3,14 @@
     ViewBag.Title = "ProductTable";
 }
 
+
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+<style>
+    .error {
+        color: red;
+    }
+</style>
 <div>
     <form method="post">
         <div class="row">
@@ -103,7 +110,7 @@
     </div>
 </div>
 <script>
-    
+
     //上一頁
     $(".pageButtons").click(function () {
 
@@ -166,7 +173,7 @@
         });
     });
     //編輯(帶入Template)
-    //改善datatable第二頁無法編輯的問題(如下) 
+    //改善datatable第二頁無法編輯的問題(如下)
     //$('#ProductsTable').on('click', '.editBtn', function ()
     $(".editBtn").click(function () {
 
