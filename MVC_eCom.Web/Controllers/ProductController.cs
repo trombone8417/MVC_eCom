@@ -11,7 +11,7 @@ namespace MVC_eCom.Web.Controllers
 {
     public class ProductController : Controller
     {
-        
+
         // GET: Product
         public ActionResult Index()
         {
@@ -19,14 +19,13 @@ namespace MVC_eCom.Web.Controllers
         }
         public ActionResult ProductTable(string search, int? pageNo)
         {
+            var pageSize = ConfigurationsService.Instance.PageSize();
             ProductSearchViewModel model = new ProductSearchViewModel();
-            model.PageNo = pageNo.HasValue ?pageNo>0? pageNo.Value:1 : 1;
-            model.Products = ProductsService.Instance.GetProducts(model.PageNo);
-            if (string.IsNullOrEmpty(search)== false)
-            {
-                model.SearchTerm = search;
-                model.Products = model.Products.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
-            }
+            model.SearchTerm = search;
+            pageNo = pageNo.HasValue ? pageNo > 0 ? pageNo.Value : 1 : 1;
+            var totalRecords = ProductsService.Instance.GetProductsCount(search);
+            model.Products = ProductsService.Instance.GetProducts(search, pageNo.Value, pageSize);
+            model.Pager = new Pager(totalRecords, pageNo, pageSize);
             return PartialView(model);
         }
         [HttpGet]
@@ -48,6 +47,7 @@ namespace MVC_eCom.Web.Controllers
 
             ProductsService.Instance.SaveProduct(newProduct);
             return RedirectToAction("ProductTable");
+
         }
         [HttpGet]
         public ActionResult Edit(int ID)
@@ -72,6 +72,10 @@ namespace MVC_eCom.Web.Controllers
             existingProduct.Description = model.Description;
             existingProduct.Price = model.Price;
             existingProduct.Category = CategoriesService.Instance.GetCategory(model.CategoryID);
+            if (!string.IsNullOrEmpty(model.ImageURL))
+            {
+                existingProduct.ImageURL = model.ImageURL;
+            }
             existingProduct.ImageURL = model.ImageURL;
 
             ProductsService.Instance.UpdateProduct(existingProduct);

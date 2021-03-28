@@ -35,5 +35,13 @@ namespace MVC_eCom.Services
                 return context.Configurations.Find(Key);
             }
         }
+        public int PageSize()
+        {
+            using (var context = new CBContext())
+            {
+                var pageSizeConfig = context.Configurations.Find("PageSize");
+                return pageSizeConfig != null ? int.Parse(pageSizeConfig.Value) : 3;
+            }
+        }
     }
 }
