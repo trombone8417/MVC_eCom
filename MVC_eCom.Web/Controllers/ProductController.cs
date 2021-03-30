@@ -71,9 +71,13 @@ namespace MVC_eCom.Web.Controllers
             existingProduct.Name = model.Name;
             existingProduct.Description = model.Description;
             existingProduct.Price = model.Price;
-            existingProduct.Category = CategoriesService.Instance.GetCategory(model.CategoryID);
-            
-            existingProduct.ImageURL = model.ImageURL;
+            //因為CategoryID可以reference Category
+            existingProduct.Category = null;
+            existingProduct.CategoryID = model.CategoryID;
+            if (!string.IsNullOrEmpty(model.ImageURL))
+            {
+                existingProduct.ImageURL = model.ImageURL;
+            }
 
             ProductsService.Instance.UpdateProduct(existingProduct);
             return RedirectToAction("ProductTable");

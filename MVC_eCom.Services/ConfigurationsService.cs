@@ -43,5 +43,13 @@ namespace MVC_eCom.Services
                 return pageSizeConfig != null ? int.Parse(pageSizeConfig.Value) : 3;
             }
         }
+        public int ShopPageSize()
+        {
+            using (var context = new CBContext())
+            {
+                var pageSizeConfig = context.Configurations.Find("ShopPageSize");
+                return pageSizeConfig != null ? int.Parse(pageSizeConfig.Value) : 6;
+            }
+        }
     }
 }

@@ -238,16 +238,7 @@ namespace MVC_eCom.Services
         {
             using (var context = new CBContext())
             {
-                var productInDB = context.Products.Where(x => x.ID == product.ID).FirstOrDefault();
-                productInDB.Name = product.Name;
-                productInDB.Description = product.Description;
-                productInDB.Price = product.Price;
-                productInDB.Category = product.Category;
-                if (!string.IsNullOrEmpty(product.ImageURL))
-                {
-                    productInDB.ImageURL = product.ImageURL;
-                }
-                context.Entry(productInDB).State = System.Data.Entity.EntityState.Modified;
+                context.Entry(product).State = System.Data.Entity.EntityState.Modified;
                 context.SaveChanges();
             }
         }
