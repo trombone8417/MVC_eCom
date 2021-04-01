@@ -40,7 +40,7 @@
             {
             
             <li class="prev">
-                <a href="@Url.Action("Index","Shop",new { pageNo=Model.Pager.CurrentPage-1,sortBy=Model.SortBy,categoryID=Model.CategoryID})"><i class="fa fa-angle-left"></i></a>
+                <a data-href="@Url.Action("FilterProducts","Shop",new { pageNo=Model.Pager.CurrentPage-1,sortBy=Model.SortBy,categoryID=Model.CategoryID})" class="pageDataLink"><i class="fa fa-angle-left"></i></a>
             </li>
             }
             @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
@@ -48,23 +48,30 @@
                 string activeClass = Model.Pager.CurrentPage == page ? "active bg-info" : string.Empty;
 
                 <li class="@activeClass">
-                    <a href="@Url.Action("Index","Shop",new { pageNo=page,sortBy=Model.SortBy,categoryID=Model.CategoryID})" title="">@page</a>
+                    <a data-href="@Url.Action("FilterProducts","Shop",new { pageNo=page,sortBy=Model.SortBy,categoryID=Model.CategoryID})" title="" class="pageDataLink">@page</a>
                 </li>
             }
 
             @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
             {
-            
-
             <li>
-                <a href="@Url.Action("Index","Shop",new { pageNo=Model.Pager.CurrentPage+1,sortBy=Model.SortBy,categoryID=Model.CategoryID})"><i class="fa fa-angle-right"></i></a>
+                <a data-href="@Url.Action("FilterProducts","Shop",new { pageNo=Model.Pager.CurrentPage+1,sortBy=Model.SortBy,categoryID=Model.CategoryID})" class="pageDataLink"><i class="fa fa-angle-right"></i></a>
                 
             </li>
             }
         </ul><!-- /.flat-pagination -->
     </div>
-
-
-
-
 }
+
+<input type="hidden" id="SearchTerm" value="@Model.SearchTerm" />
+<input type="hidden" id="SortBy" value="@Model.SortBy" />
+<input type="hidden" id="CategoryID" value="@Model.CategoryID" />
+
+<script>
+    $(".pageDataLink").click(function () {
+        var url = $(this).attr("data-href");
+        if (url != "" || url != undefined) {
+            GetData(url);
+        }
+    });
+</script>

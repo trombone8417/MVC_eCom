@@ -15,6 +15,7 @@ namespace MVC_eCom.Web.Controllers
         {
             var pageSize = ConfigurationsService.Instance.ShopPageSize();
             ShopViewModel model = new ShopViewModel();
+            model.SearchTerm = searchTerm;
             model.FeaturedCategories = CategoriesService.Instance.GetFeaturedCategories();
             model.MaximumPrice = ProductsService.Instance.GetMaximumPrice();
 
@@ -35,6 +36,7 @@ namespace MVC_eCom.Web.Controllers
             FilterProductsViewModel model = new FilterProductsViewModel();
 
             pageNo = pageNo.HasValue ? pageNo > 0 ? pageNo.Value : 1 : 1;
+            model.SearchTerm = searchTerm;
             model.SortBy = sortBy;
             model.CategoryID = categoryID;
 
