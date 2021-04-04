@@ -119,20 +119,19 @@
     });
 
     $(".dataLink").click(function () {
-        debugger;
         var url = $(this).attr("data-href");
         if (url != "" || url != undefined) {
             GetData(url);
         }
     });
-    function hideLoader() {
-        $(".loader").fadeOut();
-        $("#loading-overlay").delay(500).fadeOut('slow');
-    };
-    function showLoader() {
-        $(".loader").fadeIn();
-        $("#loading-overlay").delay(500).fadeIn('slow');
-    }
+    //function hideLoader() {
+    //    $(".loader").fadeOut();
+    //    $("#loading-overlay").delay(500).fadeOut('slow');
+    //};
+    //function showLoader() {
+    //    $(".loader").fadeIn();
+    //    $("#loading-overlay").delay(500).fadeIn('slow');
+    //}
     function GetData(dUrl) {
         showLoader();
         $.ajax({

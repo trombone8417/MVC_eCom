@@ -68,18 +68,8 @@
                     }
                         
                         <li class="box-cart nav-top-cart-wrapper">
-                            <a class="icon_cart nav-cart-trigger active" href="#"><span>3</span></a>
-                            <div class="nav-shop-cart">
-                                <div class="widget_shopping_cart_content">
-                                    <div class="woocommerce-min-cart-wrap">
-                                        <ul class="woocommerce-mini-cart cart_list product_list_widget ">
-                                            <li class="woocommerce-mini-cart-item mini_cart_item">
-                                                <span>No Items in Shopping Cart</span>
-                                            </li>
-                                        </ul>
-                                    </div><!-- /.widget_shopping_cart_content -->
-                                </div>
-                            </div><!-- /.nav-shop-cart -->
+                            <a class="icon_cart nav-cart-trigger active" href="@Url.Action("Checkout","Shop")"><span id="cartProductsCount">0</span></a>
+                           
                         </li>
                     </ul><!-- /.menu-extra -->
                     <div class="nav-wrap">
