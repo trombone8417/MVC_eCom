@@ -48,6 +48,7 @@ namespace MVC_eCom.Web.Controllers
 
         //ProductsServices productsService = new ProductsServices();
         // GET: Shop
+        [Authorize]
         public ActionResult Checkout()
         {
             CheckoutViewModel model = new CheckoutViewModel();
