@@ -65,6 +65,14 @@ namespace MVC_eCom.Web.Models
     public class RegisterViewModel
     {
         [Required]
+        [Display(Name = "姓名")]
+        public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "地址")]
+        public string Address { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "電子郵件")]
         public string Email { get; set; }

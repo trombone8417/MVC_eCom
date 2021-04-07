@@ -1,4 +1,6 @@
-﻿using MVC_eCom.Services;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using MVC_eCom.Services;
 using MVC_eCom.Web.Code;
 using MVC_eCom.Web.ViewModels;
 using System;
@@ -11,6 +13,32 @@ namespace MVC_eCom.Web.Controllers
 {
     public class ShopController : Controller
     {
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
         public ActionResult Index(string searchTerm, int? minimumPrice, int? maximumPrice, int? categoryID, int? sortBy, int? pageNo)
         {
             var pageSize = ConfigurationsService.Instance.ShopPageSize();
@@ -61,6 +89,7 @@ namespace MVC_eCom.Web.Controllers
                 //List<int> pIDs = ids.Select(x => int.Parse(x)).ToList();
                 model.CartProductIDs = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
                 model.CartProducts = ProductsService.Instance.GetProducts(model.CartProductIDs);
+                model.User = UserManager.FindById(User.Identity.GetUserId());
             }
             return View(model);
         }
