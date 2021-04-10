@@ -53,7 +53,7 @@
                         <input type="text" class="form-control" id="address" placeholder="1234 Main St" required="" value="@Model.User.Address">
                     </div>
                     <hr class="mb-4">
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+                    <button id="placeOrderBtn" class="btn btn-primary btn-lg btn-block" type="button">Place Order</button>
                 </form>
             </div>
         </div>
@@ -67,3 +67,21 @@ else
         <b>No Products in Cart.</b>
     </div>
 }
+
+<script>
+    //上一頁
+    $("#placeOrderBtn").click(function () {
+
+        $.ajax({
+            //預設Get
+            url: '@Url.Action("PlaceOrder", "Shop")',
+            data: {
+                productIDs: [1, 7, 10]
+            }
+        }).done(function (response) {
+            $("#tableContiner").html(response);
+        }).fail(function (XMLHttpRequest, textStatus, errThrown) {
+            alert("fail");
+        });
+    });
+</script>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using MVC_eCom.Entities;
 using MVC_eCom.Services;
 using MVC_eCom.Web.Code;
 using MVC_eCom.Web.ViewModels;
@@ -83,15 +84,32 @@ namespace MVC_eCom.Web.Controllers
             var CartProductsCookie = Request.Cookies["CartProducts"];
             if (CartProductsCookie != null)
             {
-                //縮寫
-                //var productIDs = CartProductsCookie.Value;
-                //var ids = productIDs.Split('-');
-                //List<int> pIDs = ids.Select(x => int.Parse(x)).ToList();
+                
                 model.CartProductIDs = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
                 model.CartProducts = ProductsService.Instance.GetProducts(model.CartProductIDs);
                 model.User = UserManager.FindById(User.Identity.GetUserId());
             }
             return View(model);
+        }
+        public JsonResult PlaceOrder(string productIDs)
+        {
+            var productQuantities = productIDs.Split('-').Select(x => int.Parse(x)).ToList();
+            var boughtProducts = ProductsService.Instance.GetProducts(productQuantities.Distinct().ToList());
+
+            Order newOrder = new Order();
+            newOrder.UserID = User.Identity.GetUserId();
+            newOrder.OrderedAt = DateTime.Now;
+            newOrder.Status = "Pending";
+            newOrder.TotalAmount = boughtProducts.Sum(x => x.Price * productQuantities.Where(productID => productID == x.ID).Count());
+
+            newOrder.OrderItems = new List<OrderItem>();
+            newOrder.OrderItems.AddRange(boughtProducts.Select(x => new OrderItem() { ProductID = x.ID }));
+
+            var rowsEffected = ShopService.Instance.SaveOrder(newOrder);
+
+            JsonResult result = new JsonResult();
+            result.Data = new { Rows = rowsEffected };
+            return result;
         }
     }
 }
