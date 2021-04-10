@@ -82,7 +82,7 @@ namespace MVC_eCom.Web.Controllers
         {
             CheckoutViewModel model = new CheckoutViewModel();
             var CartProductsCookie = Request.Cookies["CartProducts"];
-            if (CartProductsCookie != null)
+            if (CartProductsCookie != null&&!string.IsNullOrEmpty(CartProductsCookie.Value))
             {
                 
                 model.CartProductIDs = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
@@ -93,6 +93,10 @@ namespace MVC_eCom.Web.Controllers
         }
         public JsonResult PlaceOrder(string productIDs)
         {
+            JsonResult result = new JsonResult();
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            if (!string.IsNullOrEmpty(productIDs))
+            {
             var productQuantities = productIDs.Split('-').Select(x => int.Parse(x)).ToList();
             var boughtProducts = ProductsService.Instance.GetProducts(productQuantities.Distinct().ToList());
 
@@ -103,12 +107,16 @@ namespace MVC_eCom.Web.Controllers
             newOrder.TotalAmount = boughtProducts.Sum(x => x.Price * productQuantities.Where(productID => productID == x.ID).Count());
 
             newOrder.OrderItems = new List<OrderItem>();
-            newOrder.OrderItems.AddRange(boughtProducts.Select(x => new OrderItem() { ProductID = x.ID }));
+            newOrder.OrderItems.AddRange(boughtProducts.Select(x => new OrderItem() { ProductID = x.ID, Quantity = productQuantities.Where(productID => productID == x.ID).Count() }));
 
             var rowsEffected = ShopService.Instance.SaveOrder(newOrder);
 
-            JsonResult result = new JsonResult();
-            result.Data = new { Rows = rowsEffected };
+            result.Data = new { Success = true,Rows = rowsEffected };
+            }
+            else
+            {
+                result.Data = new { Success = false };
+            }
             return result;
         }
     }
