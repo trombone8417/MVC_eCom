@@ -9,22 +9,37 @@ using System.Web.Mvc;
 
 namespace MVC_eCom.Web.Controllers
 {
+    /// <summary>
+    /// 分類
+    /// </summary>
     public class CategoryController : Controller
     {
-
+        /// <summary>
+        /// 分類首頁
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Index()
         {
 
             return View();
         }
+        /// <summary>
+        /// 表格(分類)
+        /// </summary>
+        /// <param name="search">搜尋</param>
+        /// <param name="pageNo">第幾頁</param>
+        /// <returns></returns>
         public ActionResult CategoryTable(string search, int? pageNo)
         {
             CategorySearchViewModel model = new CategorySearchViewModel();
+            //搜尋
             model.SearchTerm = search;
+            //若沒有選擇頁數的話，預設第一頁
             pageNo = pageNo.HasValue ? pageNo > 0 ? pageNo.Value : 1 : 1;
-
+            //計算搜尋類別的總數
             var totalRecords = CategoriesService.Instance.GetCategoriesCount(model.SearchTerm);
+            //撈出搜尋類別的第幾頁
             model.Categories = CategoriesService.Instance.GetCategories(search, pageNo.Value);
 
             if (model.Categories != null)
@@ -46,9 +61,15 @@ namespace MVC_eCom.Web.Controllers
             NewCategoryViewModel model = new NewCategoryViewModel();
             return PartialView(model);
         }
+        /// <summary>
+        /// 新增類別
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Create(NewCategoryViewModel model)
         {
+            //驗證資料是否正確
             if (ModelState.IsValid)
             {
                 var newCategory = new Category();
@@ -61,6 +82,7 @@ namespace MVC_eCom.Web.Controllers
             }
             else
             {
+                //錯誤的話回傳500 Internal Server Error：伺服器端錯誤
                 return new HttpStatusCodeResult(500);
             }
 
@@ -100,6 +122,10 @@ namespace MVC_eCom.Web.Controllers
             CategoriesService.Instance.DeleteCategory(ID);
             return RedirectToAction("CategoryTable");
         }
+        /// <summary>
+        /// 取得所有類別
+        /// </summary>
+        /// <returns></returns>
         public ActionResult GetMainCategories()
         {
             var categories = CategoriesService.Instance.GetAllCategories();
