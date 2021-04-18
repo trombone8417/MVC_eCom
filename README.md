@@ -14,6 +14,6 @@
 ![結帳](md-img/checkout.png)
 
 ###### ERD
-![ERD](md-img/eCom_ERD.png)
+![ERD](md-img/eCom_ERD.PNG)
 
 

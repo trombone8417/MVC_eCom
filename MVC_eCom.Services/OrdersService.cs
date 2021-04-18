@@ -2,6 +2,7 @@
 using MVC_eCom.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -53,6 +54,7 @@ namespace MVC_eCom.Services
             }
         }
 
+
         public int SearchOrdersCount(string userID,string status)
         {
             using (var context = new CBContext())
@@ -69,6 +71,28 @@ namespace MVC_eCom.Services
                     orders = orders.Where(x => x.Status.ToLower().Contains(userID.ToLower())).ToList();
                 }
                 return orders.Count;
+
+            }
+        }
+
+
+        public Order GetOrderByID(int ID)
+        {
+            using (var context = new CBContext())
+            {
+                return context.Orders.Where(x=>x.ID==ID).Include(x=>x.OrderItems).Include("OrderItems.Product").FirstOrDefault();
+
+            }
+        }
+
+        public object UpdateOrderStatus(int ID, string status)
+        {
+            using (var context = new CBContext())
+            {
+                var order = context.Orders.Find(ID);
+                order.Status = status;
+                context.Entry(order).State = EntityState.Modified;
+                return context.SaveChanges() > 0;
 
             }
         }

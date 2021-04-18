@@ -51,25 +51,32 @@
                     </div><!-- /.logo -->
                     <div class="mobile-button"><span></span></div>
                     <ul class="menu-extra">
-                        <li class="box-search">
-                            <a class="icon_search header-search-icon" href="#"></a>
-                            <form role="search" method="get" class="header-search-form" action="#">
-                                <input type="text" value="" name="s" class="header-search-field" placeholder="Search...">
-                                <button type="submit" class="header-search-submit" title="Search">Search</button>
-                            </form>
-                        </li>
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                    <li class="box-login">
-                        <a class="icon_login" href="#">
-                            @User.Identity.Name
-                        </a>
-                    </li>
-                    }
-                        
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li>
+                                @User.Identity.Name
+                            </li>
+                        }
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li>
+                                @using (Html.BeginForm("LogOff", "Account"))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <button class="btn btn-outline-primary btn-sm" type="submit">登出</button>
+                                }
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="@Url.Action("Login","Account")">登入</a>
+                            </li>
+                        }
                         <li class="box-cart nav-top-cart-wrapper">
                             <a class="icon_cart nav-cart-trigger active" href="@Url.Action("Checkout","Shop")"><span id="cartProductsCount">0</span></a>
-                           
+
                         </li>
                     </ul><!-- /.menu-extra -->
                     <div class="nav-wrap">
@@ -82,8 +89,11 @@
                                     <a href="@Url.Action("Index","Shop")">SHOP</a>
                                 </li>
                                 <li>
-                                    <a href="@Url.Action("Checkout","Shop")">CONTACT</a>
+                                    <a href="@Url.Action("Checkout","Shop")">結帳</a>
                                 </li>
+                                
+
+
                             </ul>
                         </nav><!-- /.mainnav -->
                     </div><!-- /.nav-wrap -->
